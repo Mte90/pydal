@@ -2,7 +2,8 @@
 
 ![](https://scontent-mxp1-1.cdninstagram.com/vp/24deea99016aa2194f65538dc11151dd/5B905E2E/t51.2885-15/e35/31412285_385252728550410_4628929324278349824_n.jpg)
 
-AS YOu can see in photo, in my case is a foot switch but on Linux there is no support. Also can be cool to have that every button run a specific script that do magic and not a press event that print like `1`.  
+Aa you can see in photo, in my case is a foot switch and on Linux there is no official support by no one producer.  
+Can be cool to have that every button execute a specific script (that do magic stuff) and not only a press event that print like `1`.  
 With Python 3 and few permission enabled this solution works on all the linux distro.
 
 # WIP

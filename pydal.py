@@ -1,34 +1,31 @@
 #!/usr/bin/python3
-import configparser, argparse
+import configparser, argparse, os
 from evdev import InputDevice, categorize, ecodes, list_devices
 
-
-class C:
-    pass
-
-
-parameters = C()
 parser = argparse.ArgumentParser(description='Pydal is a simple tool to change the behaviour of a bekyboard with scripts')
-parser.add_argument('devices', help='The devices list', default=None)
-parser.add_argument('run', help='Launch Pydal', default=None)
-parser.add_argument('--config', help='Config file for Pydal', action='store_true', default=None)
+parser.add_argument('-devices', help='The devices list', nargs='?', const='')
+parser.add_argument('-run', help='Launch Pydal', nargs='?', const='')
+parser.add_argument('--config', help='Config file for Pydal', nargs='?', const='')
 parser.add_argument('--version', action='version', version='%(prog)s 1.0')
-parser.parse_args(['devices', 'run', '--config'], namespace=parameters)
+args = parser.parse_args()
 
-print(parameters.devices)
-if parameters.devices is not None or parameters.run is not None:
+if args.devices is not None or args.run is not None:
     print('Pydal started!')
     # Load configuration
-    if parameters.config is not None:
+    if args.config is not None:
+        if not os.path.exists(args.config):
+            print('Config file not found on ' + args.config)
+            exit()
+        print('Config loaded!')
         config = configparser.RawConfigParser()
-        config.readfp(open(parameters.config))
+        config.readfp(open(args.config))
 
     devices = [InputDevice(fn) for fn in list_devices()]
     print('Looking for the devices')
     for device in devices:
-        if parameters.devices:
+        if args.devices:
             print(device)
-        if parameters.run:
+        if args.run:
             if device.name == 'MKEYBOARD':
                 print('Device found!')
                 dev = InputDevice(device.fn)

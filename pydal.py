@@ -19,6 +19,14 @@ if args.devices is not None or args.run is not None:
         print('  Config loaded!')
         config = configparser.RawConfigParser()
         config.readfp(open(args.config))
+        hotkeys = {}
+        key = 0
+
+        for section in config.sections():
+            if 'key' in config[section]:
+                key += 1
+                hotkeys[config.get(section, 'key')] = [config.get(section, 'status'), config.get(section, 'run')]
+        print('Find ' + str(key) + ' hotkeys to configure...')
 
     devices = [InputDevice(fn) for fn in list_devices()]
     print('Looking for the devices...')

@@ -2,32 +2,34 @@
 import configparser, argparse, os
 from evdev import InputDevice, categorize, ecodes, list_devices
 
-parser = argparse.ArgumentParser(description='Pydal is a simple tool to change the behaviour of a bekyboard with scripts')
-parser.add_argument('-devices', help='The devices list', nargs='?', const='')
-parser.add_argument('-run', help='Launch Pydal', nargs='?', const='')
-parser.add_argument('--config', help='Config file for Pydal', nargs='?', const='')
+parser = argparse.ArgumentParser(description='Pydal is a simple tool to change the behaviour of a bekyboard with scripts on Linux')
+parser.add_argument('-devices', help='The devices list', nargs='?', action='store', const='1')
+parser.add_argument('-run', help='Launch Pydal', nargs='?', action='store', const='1')
+parser.add_argument('--config', help='Config file for Pydal', nargs='?', action='store', const='')
 parser.add_argument('--version', action='version', version='%(prog)s 1.0')
 args = parser.parse_args()
 
 if args.devices is not None or args.run is not None:
-    print('Pydal started!')
+    print('Pydal started...')
     # Load configuration
     if args.config is not None:
         if not os.path.exists(args.config):
             print('Config file not found on ' + args.config)
             exit()
-        print('Config loaded!')
+        print('  Config loaded!')
         config = configparser.RawConfigParser()
         config.readfp(open(args.config))
 
     devices = [InputDevice(fn) for fn in list_devices()]
-    print('Looking for the devices')
+    print('Looking for the devices...')
+    gotit = False
     for device in devices:
         if args.devices:
             print(device)
         if args.run:
-            if device.name == 'MKEYBOARD':
-                print('Device found!')
+            if device.name == config.get('keyboard', 'name'):
+                gotit = True
+                print('  Device found!')
                 dev = InputDevice(device.fn)
                 dev.grab()
                 for event in dev.read_loop():
@@ -35,5 +37,7 @@ if args.devices is not None or args.run is not None:
                         press = categorize(event)
                         if press.key_down:
                             print(press.keycode)
+    if gotit is False:
+        print('  Device ' + config.get('keyboard', 'name') + ' not found :-(')
 else:
     parser.print_help()

@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-import configparser, argparse, os
+import configparser, argparse, os, subprocess
 from evdev import InputDevice, categorize, ecodes, list_devices
 
 parser = argparse.ArgumentParser(description='Pydal is a simple tool to change the behaviour of a bekyboard with scripts on Linux')
@@ -43,8 +43,12 @@ if args.devices is not None or args.run is not None:
                 for event in dev.read_loop():
                     if event.type == ecodes.EV_KEY:
                         press = categorize(event)
-                        if press.key_down:
-                            print(press.keycode)
+                        button = press.keycode
+                        button = button.replace('KEY_','')
+                        if button in hotkeys:
+                            if hotkeys[button][0] == 'keydown' and press.key_down or hotkeys[button][0] == 'keyup' and press.key_up:
+                                print('Executing script for ' + button + ' on ' + hotkeys[button][0])
+                                subprocess.Popen(hotkeys[button][1], shell = True)
     if gotit is False:
         print('  Device ' + config.get('keyboard', 'name') + ' not found :-(')
 else:

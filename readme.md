@@ -1,14 +1,47 @@
 # What?!?
 
-![](https://scontent-mxp1-1.cdninstagram.com/vp/24deea99016aa2194f65538dc11151dd/5B905E2E/t51.2885-15/e35/31412285_385252728550410_4628929324278349824_n.jpg)
+![](https://daniele.tech/wp-content/uploads/2018/05/footswitch-300x300.jpg)
 
-Aa you can see in photo, in my case is a foot switch and on Linux there is no official support by no one producer.  
-Can be cool to have that every button execute a specific script (that do magic stuff) and not only a press event that print like `1`.  
-With Python 3 and few permission enabled this solution works on all the linux distro.
+As you can see in photo, in my case I have a foot switch and on Linux there is no official support by no one producer to configure it.  
+Should be cool that every button execute a specific script (that do magic stuff of course) and not only a classic press event that print only `1`?  
+With Python 3 and few permissions enabled this solution works on all the Linux distro.  
 
-# WIP
+## Why
 
-This is the first prototype version that has hardcoded the model name, the stable version will have a config for every button to execute a script in the state up/down.
+In my case I am using this footswitch to move the cursor between my 3 monitor to get the focus on the software opened at fullscreen that I usually have.  
+THis is a very poor example but I want to get before experience (or remember that I have a pedal) and in the future use it for more advanced things.
+
+# Configure
+
+```
+mte90:~/pydal $ ./pydal.py 
+usage: pydal.py [-h] [-devices [DEVICES]] [-run [RUN]] [--config [CONFIG]]
+                [--version]
+
+Pydal is a simple tool to change the behaviour of a bekyboard with scripts on
+Linux
+
+optional arguments:
+  -h, --help          show this help message and exit
+  -devices [DEVICES]  The devices list
+  -run [RUN]          Launch Pydal
+  --config [CONFIG]   Config file for Pydal
+  --version           show program's version number and exit
+```
+
+## First step
+
+Run `pydal.py -devices` to get a list of all the HID devices connected to your computer.  
+Save the name of the keyboard that you want script somewhere.
+
+## Second step
+
+Copy `config-sample.ini` where you want (also with a different name) and add the keyboard name in the config file.  
+Configure the settings as you wish for every key, on the keydown/keyup status and a absolute path to the script that you want to execute.
+
+## Third step
+
+Run with `pydal.py --config /your/path/config.ini -run` and get fun!
 
 # Installation
 

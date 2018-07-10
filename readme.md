@@ -1,4 +1,6 @@
 # What?!?
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FMte90%2Fpydal.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FMte90%2Fpydal?ref=badge_shield)
+
 
 ![](https://daniele.tech/wp-content/uploads/2018/05/footswitch-300x300.jpg)
 
@@ -58,3 +60,7 @@ usermod -a -G plugdev mte90
 
 Add the udev rules to your system `99-pydal.rules` on `/etc/udev/rules.d/`.
 
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FMte90%2Fpydal.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FMte90%2Fpydal?ref=badge_large)

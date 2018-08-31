@@ -28,7 +28,7 @@ if args.devices is not None or args.run is not None:
                 hotkeys[config.get(section, 'key')] = [config.get(section, 'status'), config.get(section, 'run')]
         print('Find ' + str(key) + ' hotkeys to configure...')
 
-    devices = [InputDevice(fn) for fn in list_devices()]
+    devices = [InputDevice(fn) for fn in reversed(list_devices())]
     print('Looking for the devices...')
     gotit = False
     for device in devices:

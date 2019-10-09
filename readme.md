@@ -1,4 +1,5 @@
 # What?!?
+[![License](https://img.shields.io/badge/License-BSD%20v3-blue.svg)](https://spdx.org/licenses/BSD-3-Clause)   
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FMte90%2Fpydal.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FMte90%2Fpydal?ref=badge_shield)
 
 

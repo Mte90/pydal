@@ -18,7 +18,7 @@ if args.devices is not None or args.run is not None:
             exit()
         print('  Config loaded!')
         config = configparser.RawConfigParser()
-        config.readfp(open(args.config))
+        config.read_file(open(args.config))
         hotkeys = {}
         key = 0
 
@@ -38,18 +38,18 @@ if args.devices is not None or args.run is not None:
             if device.name == config.get('keyboard', 'name'):
                 gotit = True
                 print('  Device found!')
-                dev = InputDevice(device.fn)
+                dev = InputDevice(device.path)
                 dev.grab()
                 for event in dev.read_loop():
                     if event.type == ecodes.EV_KEY:
                         press = categorize(event)
                         button = press.keycode
-                        button = button.replace('KEY_','')
+                        button = button.replace('KEY_', '')
                         if button in hotkeys:
                             if hotkeys[button][0] == 'keydown' and press.key_down or hotkeys[button][0] == 'keyup' and press.key_up:
                                 print('Executing script for ' + button + ' on ' + hotkeys[button][0])
                                 subprocess.Popen(hotkeys[button][1], shell = True)
-    if gotit is False:
+    if gotit is False and args.config is not None:
         print('  Device ' + config.get('keyboard', 'name') + ' not found :-(')
 else:
     parser.print_help()

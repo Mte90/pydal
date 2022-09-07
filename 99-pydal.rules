@@ -1,1 +1,1 @@
-KERNEL=="event*", NAME="input/%k", MODE="660", GROUP="plugdev"
+KERNEL=="event*", MODE="660", GROUP="plugdev"

@@ -8,15 +8,14 @@ A simple way to create your macros, with a config file to execute cusom script/p
 As you can see in photo, in my case I have a foot switch and in this way I am able to use it to run scripts that move my mouse cursor in one of the 3 monitor I have.
 This tiny Python script, parse the config file and map to the specific keyboard configured a script to execute on the various buttons.
 
-# Configure
+# Commands
 
 ```
 mte90:~/pydal $ ./pydal.py 
 usage: pydal.py [-h] [-devices [DEVICES]] [-run [RUN]] [--config [CONFIG]]
                 [--version]
 
-Pydal is a simple tool to change the behaviour of a bekyboard with scripts on
-Linux
+Pydal is a tiny script to assign a script to a button of a specific keyboard
 
 optional arguments:
   -h, --help          show this help message and exit
@@ -25,6 +24,8 @@ optional arguments:
   --config [CONFIG]   Config file for Pydal
   --version           show program's version number and exit
 ```
+
+# How to use it
 
 ## First step
 
@@ -49,8 +50,8 @@ Requirements:
 Permission to the user to access to all the input devices:
 
 ```
-useradd plugdev mte90
-usermod -a -G plugdev mte90
+useradd plugdev [your-user]
+usermod -a -G plugdev [your-user]
 ```
 
 Add the udev rules to your system `99-pydal.rules` on `/etc/udev/rules.d/`.

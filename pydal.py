@@ -58,7 +58,7 @@ for device in devices:
                     press = categorize(event)
                     button = press.keycode.replace("KEY_", "")
                     if button in hotkeys:
-                        if hotkeys[button][0] == "keyup" and press.key_up:
+                        if hotkeys[button][0] == "keyup" and press.key_up or hotkeys[button][0] == "keydown" and press.key_down:
                             print("Executing script for " + button + " on " + hotkeys[button][0])
                             subprocess.Popen(hotkeys[button][1], shell=True)
 

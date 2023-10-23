@@ -21,22 +21,27 @@ if args.devices is None and args.run is None:
 
 print("Pydal started...")
 
+config = configparser.RawConfigParser()
+    
 # Load configuration
+config_path = './config.ini'
 if args.config is not None:
-    if not os.path.exists(args.config):
-        print("Config file not found on " + args.config)
-        exit()
-    print("  Config loaded!")
-    config = configparser.RawConfigParser()
-    config.read_file(open(args.config))
-    hotkeys = {}
-    key = 0
+    config_path = args.config
 
-    for section in config.sections():
-        if "key" in config[section]:
-            key += 1
-            hotkeys[config.get(section, "key")] = [config.get(section, "status"), config.get(section, "run")]
-    print("Find " + str(key) + " hotkeys to configure...")
+if not os.path.exists(config_path):
+    print("Config file not found on " + config_path)
+    exit()
+print("  Config loaded!")
+config.read_file(open(config_path))
+hotkeys = {}
+key = 0
+
+for section in config.sections():
+    if "key" in config[section]:
+        key += 1
+        hotkeys[config.get(section, "key")] = [config.get(section, "status"), config.get(section, "run")]
+print("Find " + str(key) + " hotkeys to configure...")
+
 
 devices = [InputDevice(fn) for fn in reversed(list_devices())]
 print("Looking for the devices...")

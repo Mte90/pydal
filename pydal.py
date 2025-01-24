@@ -4,6 +4,7 @@ import argparse
 import os
 import sys
 import subprocess
+import time
 from evdev import InputDevice, categorize, ecodes, list_devices
 
 parser = argparse.ArgumentParser(
@@ -42,6 +43,8 @@ for section in config.sections():
         hotkeys[config.get(section, "key")] = [config.get(section, "status"), config.get(section, "run")]
 print("Find " + str(key) + " hotkeys to configure...")
 
+last_pressed = {}
+cooldown = 0.5
 
 devices = [InputDevice(fn) for fn in reversed(list_devices())]
 print("Looking for the devices...")
@@ -67,9 +70,13 @@ for device in devices:
                     press = categorize(event)
                     button = press.keycode.replace("KEY_", "")
                     if button in hotkeys:
+                        current_time = time.time()
+                        last_time = last_pressed.get(button, 0)
                         if hotkeys[button][0] == "keyup" and press.key_up or hotkeys[button][0] == "keydown" and press.key_down:
-                            print("Executing script for " + button + " on " + hotkeys[button][0])
-                            subprocess.Popen(hotkeys[button][1], shell=True)
+                            if current_time - last_time >= cooldown:
+                                print("Executing script for " + button + " on " + hotkeys[button][0])
+                                subprocess.Popen(hotkeys[button][1], shell=True)
+                                last_pressed[button] = current_time
 
 if gotit is False and args.config is not None:
     print("  Device " + config.get("keyboard", "name") + " not found :-(")

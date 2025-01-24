@@ -57,7 +57,11 @@ for device in devices:
             gotit = True
             print("  Device found!")
             dev = InputDevice(device.path)
-            dev.grab()
+            try:
+                dev.grab()
+            except OSError:
+                print("Device already grabbed!")
+                sys.exit()
             for event in dev.read_loop():
                 if event.type == ecodes.EV_KEY:
                     press = categorize(event)

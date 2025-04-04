@@ -54,4 +54,8 @@ useradd plugdev [your-user]
 usermod -a -G plugdev [your-user]
 ```
 
-Add the udev rules to your system `99-pydal.rules` on `/etc/udev/rules.d/`.
+Add the udev rules to your system `99-pydal.rules` on `/etc/udev/rules.d/`:
+
+```
+KERNEL=="event*", MODE="660", GROUP="plugdev"
+```
